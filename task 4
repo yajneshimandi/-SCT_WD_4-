@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+ <html lang="en">
+ <head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>To-Do List App</title>
+     <style>
+         body { font-family: Arial, sans-serif; text-align: center; }
+         #taskList { list-style-type: none; padding: 0; }
+         li { padding: 10px; border-bottom: 1px solid #ddd; display: flex; justify-content: space-between; align-items: center; }
+         .completed { text-decoration: line-through; color: gray; }
+         button { margin-left: 5px; }
+         .task-details { flex-grow: 1; text-align: left; }
+     </style>
+ </head>
+ <body>
+     <h1>To-Do List</h1>
+     <input type="text" id="taskInput" placeholder="Add a task...">
+     <input type="datetime-local" id="taskDate">
+     <button onclick="addTask()">Add Task</button>
+     <ul id="taskList"></ul>
+ 
+     <script>
+         function addTask() {
+             let taskInput = document.getElementById('taskInput');
+             let taskDate = document.getElementById('taskDate');
+             let taskList = document.getElementById('taskList');
+             
+             if (taskInput.value === '') return;
+             
+             let li = document.createElement('li');
+             let taskDetails = document.createElement('span');
+             taskDetails.className = 'task-details';
+             taskDetails.innerText = `${taskInput.value} (Due: ${taskDate.value})`;
+             
+             let completeBtn = document.createElement('button');
+             completeBtn.innerText = '✔';
+             completeBtn.onclick = function() { li.classList.toggle('completed'); };
+             
+             let editBtn = document.createElement('button');
+             editBtn.innerText = '✎';
+             editBtn.onclick = function() { 
+                 let newText = prompt('Edit task:', taskInput.value);
+                 if (newText) taskDetails.innerText = `${newText} (Due: ${taskDate.value})`; 
+             };
+             
+             let deleteBtn = document.createElement('button');
+             deleteBtn.innerText = '🗑';
+             deleteBtn.onclick = function() { li.remove(); };
+             
+             li.appendChild(taskDetails);
+             li.appendChild(completeBtn);
+             li.appendChild(edit
